@@ -14,7 +14,7 @@ public class AccessPerfByte {
 
     private int N = 10007;
 
-    @Param({"0"})
+    @Param({"0", "1"})
     private int alignOff;
 
     @Param({"true", "false"})
