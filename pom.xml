@@ -47,6 +47,8 @@
         <maven.bundle.plugin.version>4.2.1</maven.bundle.plugin.version>
 
         <doclint>all,-missing</doclint>
+
+        <jmh.version>1.23</jmh.version>
     </properties>
 
     <dependencies>
@@ -81,6 +83,17 @@
             <artifactId>guava</artifactId>
             <version>18.0</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>${jmh.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>${jmh.version}</version>
         </dependency>
 
     </dependencies>
@@ -360,6 +373,48 @@
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>profiling-profile</id>
+            <activation>
+                <property>
+                    <name>enableBenchmark</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.baidu.maven</groupId>
+                        <artifactId>jmh-maven-plugin</artifactId>
+                        <version>1.0.3</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.openjdk.jmh</groupId>
+                                <artifactId>jmh-core</artifactId>
+                                <version>${jmh.version}</version>
+                            </dependency>
+                        </dependencies>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>jmh</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <warmupForks>1</warmupForks>
+                            <warmupIterations>3</warmupIterations>
+                            <warmupTime>1s</warmupTime>
+                            <forks>1</forks>
+                            <threads>1</threads>
+                            <measurementIterations>5</measurementIterations>
+                            <measurementTime>2s</measurementTime>
+                            <mode>avgt</mode>
+                            <timeUnit>us</timeUnit>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

@@ -11,4 +11,5 @@ package java.lang;
 
 public class Math {
     public static long multiplyHigh(long x, long y) { throw new UnsupportedOperationException(); }
+    public static int max(int x, int y) { throw new UnsupportedOperationException(); }
 }
